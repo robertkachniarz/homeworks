@@ -6,16 +6,32 @@ import java.util.stream.Collectors;
 public class Deck {
     private Set<Card> cards = new HashSet<>();
 
-    public void addRandomCard(){
+    public Deck() {
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    public Card addRandomCard(){
         Card randomCard;
         do {
             int pickColor = new Random().nextInt(Color.values().length);
             int pickSymbol = new Random().nextInt(Symbol.values().length);
             randomCard = new Card(Color.values()[pickColor], Symbol.values()[pickSymbol]);
         } while (cards.contains(randomCard));
-
-        cards.add(randomCard);
+        return randomCard;
     }
+    public void addRandomHand(){
+        Set<Card> cardsOnHand = new HashSet<>();
+        for (int i = 0; i < 5; i++) cardsOnHand.add(addRandomCard());
+        this.setCards(cardsOnHand);
+    }
+
     public boolean hasThree(){
         boolean result = false;
         for (Symbol symbol : Symbol.values()) {
